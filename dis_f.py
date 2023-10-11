@@ -179,6 +179,12 @@ for harvest_car in harvest_cars:
         'contractor_name': harvest_car.contractor,
         'truck_id': None  # Initialize TruckID as None
     }
+contractor_truck_mapping = {}
+for truck in trucks:
+    if truck.contractor in contractor_truck_mapping:
+        contractor_truck_mapping[truck.contractor].append(truck.truck_id)
+    else:
+        contractor_truck_mapping[truck.contractor] = [truck.truck_id]
     
 # Sort the plots by distance to the nearest harvest car
 for plot in plots:
@@ -187,7 +193,7 @@ for plot in plots:
     plot.distance_to_nearest = plot.routes[nearest_harvest_car_id]
     # Populate contractor name and TruckID based on the nearest harvest car
     plot.contractor_name = harvest_car_info[nearest_harvest_car_id]['contractor_name']
-    plot.truck_id = harvest_car_info[nearest_harvest_car_id]['truck_id']
+    plot.truck_id = contractor_truck_mapping.get(plot.contractor_name, [])
 
 # Write the updated plot and harvest car data back to CSV files
 with open('SugarcaneData - Plot_with_distances.csv', mode='w', newline='', encoding='utf-8') as file:
