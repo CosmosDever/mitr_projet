@@ -177,7 +177,7 @@ harvest_car_info = {}
 for harvest_car in harvest_cars:
     harvest_car_info[harvest_car.car_id] = {
         'contractor_name': harvest_car.contractor,
-        'truck_id': None  # Initialize TruckID as None
+        'truck_id': None 
     }
 contractor_truck_mapping = {}
 for truck in trucks:
